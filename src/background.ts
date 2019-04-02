@@ -17,7 +17,7 @@ import axios from 'axios';
       return;
     }
 
-    const text = `${item.name} - ${item.artists.map(({ name }: { name: string }) => name).join(', ')}\n${item.href}\n#NowPlaying`;
+    const text = `${item.name} - ${item.artists.map(({ name }: { name: string }) => name).join(', ')}\n${item.external_urls.spotify}\n#NowPlaying`;
     browser.windows.create({
       url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
       type: 'popup',
