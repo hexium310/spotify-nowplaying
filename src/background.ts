@@ -24,7 +24,9 @@ browser.browserAction.onClicked.addListener(async () => {
     return;
   }
 
-  const text = `${item.name} - ${item.artists.map(({ name }: { name: string }) => name).join(', ')}\n${item.external_urls.spotify}\n#NowPlaying`;
+  const artists = item.artists.map(({ name }: { name: string }) => name).join(', ');
+  const song = item.name;
+  const text = `${artists} - ${song}\n${item.external_urls.spotify}\n#NowPlaying`;
   browser.windows.create({
     url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
     type: 'popup',
