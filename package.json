@@ -12,19 +12,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.122",
-    "@typescript-eslint/eslint-plugin": "^3.9.0",
-    "@typescript-eslint/parser": "^3.9.0",
+    "@types/chrome": "^0.0.140",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
     "axios": "^0.21.1",
-    "eslint": "^7.6.0",
-    "html-webpack-plugin": "^4.3.0",
-    "query-string": "^6.13.1",
-    "ts-loader": "^8.0.2",
+    "eslint": "^7.26.0",
+    "html-webpack-plugin": "^5.3.1",
+    "query-string": "^7.0.0",
+    "ts-loader": "^9.1.2",
     "tslint": "^6.1.3",
-    "typescript": "^3.9.7",
-    "webextension-polyfill-ts": "^0.19.0",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "typescript": "^4.2.4",
+    "webextension-polyfill-ts": "^0.25.0",
+    "webpack": "^5.37.0",
+    "webpack-cli": "^4.7.0"
   },
   "dependencies": {}
 }
