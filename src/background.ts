@@ -1,10 +1,9 @@
-import axios from 'axios';
 import { browser } from 'webextension-polyfill-ts';
 import { authenticate } from './utils/authenticate';
 
 import { client_id } from '../config.json';
 
-browser.browserAction.onClicked.addListener(async () => {
+chrome.action.onClicked.addListener(async () => {
   const { expiresIn } = await browser.storage.local.get('expiresIn') as Storage;
   if (!expiresIn || expiresIn < Date.now()) {
     await authenticate(client_id);
@@ -15,11 +14,11 @@ browser.browserAction.onClicked.addListener(async () => {
     return;
   }
 
-  const { item } = await axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
+  const { item } = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
     },
-  }).then(({ data }) => data);
+  }).then((response) => response.json()).then((data) => data);
   if (!item) {
     return;
   }

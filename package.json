@@ -15,7 +15,6 @@
     "@types/chrome": "^0.0.140",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
-    "axios": "^0.21.1",
     "eslint": "^7.26.0",
     "html-webpack-plugin": "^5.3.1",
     "query-string": "^7.0.0",

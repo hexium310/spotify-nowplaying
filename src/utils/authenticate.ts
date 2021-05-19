@@ -1,5 +1,4 @@
 import { browser } from 'webextension-polyfill-ts';
-import axios, { AxiosResponse } from 'axios';
 import queryString from 'query-string';
 
 export const getTokenResponse = (
@@ -23,7 +22,7 @@ export const getTokenResponse = (
   });
 };
 
-export const authenticate = async (client_id: string): Promise<AxiosResponse> => {
+export const authenticate = async (client_id: string): Promise<Response> => {
   const redirect_uri = browser.identity.getRedirectURL();
   const scope = 'user-read-private user-read-currently-playing';
   const state = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -37,16 +36,16 @@ export const authenticate = async (client_id: string): Promise<AxiosResponse> =>
     expiresIn: Date.now() + Number(expiresIn),
   });
 
-  return axios.get('https://api.spotify.com/v1/me', {
+  return fetch('https://api.spotify.com/v1/me', {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
     },
-  }).then(response => {
+  }).then((response) => response.json()).then((data) => {
     browser.storage.local.set({
-      userName: response.data.display_name,
-      isPremium: response.data.product === 'premium',
+      userName: data.display_name,
+      isPremium: data.product === 'premium',
     });
 
-    return response;
+    return data;
   });
 };
