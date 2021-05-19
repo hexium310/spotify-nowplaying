@@ -1,7 +1,7 @@
 import { browser } from 'webextension-polyfill-ts';
 import queryString from 'query-string';
 
-export const getTokenResponse = (
+export const getTokenResponse = async (
   client_id: string,
   redirect_uri: string,
   state: string,
