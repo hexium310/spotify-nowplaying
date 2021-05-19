@@ -33,7 +33,7 @@ export const authenticate = async (client_id: string): Promise<Response> => {
   } = await getTokenResponse(client_id, redirect_uri, state, scope);
   browser.storage.local.set({
     accessToken,
-    expiresIn: Date.now() + Number(expiresIn),
+    expiresAt: Date.now() + Number(expiresIn) * 1000,
   });
 
   return fetch('https://api.spotify.com/v1/me', {

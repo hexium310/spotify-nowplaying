@@ -4,8 +4,8 @@ import { authenticate } from './utils/authenticate';
 import { client_id } from '../config.json';
 
 chrome.action.onClicked.addListener(async () => {
-  const { expiresIn } = await browser.storage.local.get('expiresIn') as Storage;
-  if (!expiresIn || expiresIn < Date.now()) {
+  const { expiresAt } = await browser.storage.local.get('expiresAt') as Storage;
+  if (!expiresAt || expiresAt < Date.now()) {
     await authenticate(client_id);
   }
 
