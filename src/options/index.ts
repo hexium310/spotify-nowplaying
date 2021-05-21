@@ -1,7 +1,8 @@
 import { browser } from 'webextension-polyfill-ts';
 import { authenticate } from '../utils/authenticate';
 
-import { client_id } from '../../config.json';
+import config from '../../config.json';
+const { client_id } = config;
 
 (async () => {
   const { userName, isPremium } = await browser.storage.local.get(['userName', 'isPremium']) as Storage;

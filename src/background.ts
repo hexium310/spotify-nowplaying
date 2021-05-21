@@ -1,7 +1,8 @@
 import { browser } from 'webextension-polyfill-ts';
 import { authenticate } from './utils/authenticate';
 
-import { client_id } from '../config.json';
+import config from '../config.json';
+const { client_id } = config;
 
 chrome.action.onClicked.addListener(async () => {
   const { expiresAt } = await browser.storage.local.get('expiresAt') as Storage;
