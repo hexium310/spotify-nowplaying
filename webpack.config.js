@@ -28,6 +28,7 @@ module.exports = {
       },
     ],
   },
+  devtool: false,
   plugins: [
     new HtmlWebpackPlugin({
       inject: false,
