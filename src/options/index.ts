@@ -1,11 +1,12 @@
 import { browser } from 'webextension-polyfill-ts';
 import { authenticate } from '../utils/authenticate';
 
+import { SpotifyNowplayingStorage } from '../types';
 import config from '../../config.json';
 const { client_id } = config;
 
 (async () => {
-  const { userName, isPremium } = await browser.storage.local.get(['userName', 'isPremium']) as Storage;
+  const { userName, isPremium } = await browser.storage.local.get(['userName', 'isPremium']) as SpotifyNowplayingStorage;
 
   const mainElement = document.getElementById('main') as HTMLElement;
   if (userName && !isPremium) {
