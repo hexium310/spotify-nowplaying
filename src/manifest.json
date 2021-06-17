@@ -13,7 +13,8 @@
   },
   "permissions": [
     "identity",
-    "storage"
+    "storage",
+    "tabs"
   ],
   "host_permissions": [
     "https://accounts.spotify.com/*"

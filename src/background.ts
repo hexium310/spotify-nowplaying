@@ -27,10 +27,24 @@ chrome.action.onClicked.addListener(async () => {
   const artists = item.artists.map(({ name }: { name: string }) => name).join(', ');
   const song = item.name;
   const text = `${artists} - ${song}\n${item.external_urls.spotify}\n#NowPlaying`;
-  browser.windows.create({
+  const tweetWindow = await chrome.windows.create({
     url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
     type: 'popup',
     width: 550,
     height: 450,
   });
+
+  const tabId = tweetWindow.tabs && tweetWindow.tabs[0].id;
+  const onUpdated: Parameters<chrome.tabs.TabUpdatedEvent["addListener"]>[0] = (id, changeInfo) => {
+    if (id !== tabId) {
+      return;
+    }
+
+    if (changeInfo.status === 'loading' && changeInfo.url === `https://twitter.com/`) {
+      chrome.tabs.onUpdated.removeListener(onUpdated);
+      chrome.tabs.remove(id);
+    }
+  };
+
+  chrome.tabs.onUpdated.addListener(onUpdated);
 });
