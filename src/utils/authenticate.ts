@@ -1,51 +1,109 @@
 import { browser } from 'webextension-polyfill-ts';
-import queryString from 'query-string';
 
-export const getTokenResponse = async (
-  client_id: string,
-  redirect_uri: string,
-  state: string,
-  scope: string,
-): Promise<queryString.ParsedQuery> => {
+import { AuthorizationError, UnmatchStateError } from '../types';
+
+interface AuthorizationQueryParameter {
+  client_id: string;
+  response_type: 'code';
+  redirect_uri: string;
+  code_challenge_method: 'S256';
+  code_challenge: string;
+  state?: string;
+  scope?: string;
+}
+
+interface RedirectQueryParameter {
+  code?: string;
+  error?: string;
+  state?: string;
+}
+
+interface TokenRequestBody extends Record<string, string> {
+  client_id: string;
+  grant_type: 'authorization_code' | 'refresh_token';
+  code: string;
+  redirect_uri: string;
+  code_verifier: string;
+}
+
+interface TokenResponse {
+  access_token: string;
+  token_type: string;
+  scope: string;
+  expires_in: string;
+  refresh_token: string;
+}
+
+type AuthenticationError = AuthorizationError | UnmatchStateError;
+
+export const encodeToBase64 = (buffer: ArrayBuffer): string => {
+  return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+};
+
+export const escapeForUrl = (base64: string): string => {
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+};
+
+export const generateCodeVerifier = (): string => {
+  return escapeForUrl(encodeToBase64(new Uint8Array(32)));
+};
+
+export const generateCodeChallenge = async (verifier: string): Promise<string> => {
+  const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
+  return escapeForUrl(encodeToBase64(buffer));
+};
+
+export const authorize = async (params: AuthorizationQueryParameter): Promise<RedirectQueryParameter> => {
   return browser.identity.launchWebAuthFlow({
-    url: 'https://accounts.spotify.com/authorize?' + queryString.stringify({
-      client_id,
-      response_type: 'token',
-      redirect_uri,
-      state,
-      scope,
-    }),
+    url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(params as Required<AuthorizationQueryParameter>).toString(),
     interactive: true,
-  }).then(responseUrl => {
+  }).then((responseUrl) => {
     const url = new URL(responseUrl);
-    return queryString.parse(url.hash);
+    return Object.fromEntries(url.searchParams.entries());
   });
 };
 
-export const authenticate = async (client_id: string): Promise<Response> => {
-  const redirect_uri = browser.identity.getRedirectURL();
+export const exchangeCodeForToken = async (params: TokenRequestBody): Promise<TokenResponse> => {
+  const body = new URLSearchParams(params);
+
+  return fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    body,
+  }).then((response) => response.json()).then((data: TokenResponse) => {
+    return data;
+  });
+};
+
+export const authenticate = async (clientId: string): Promise<TokenResponse | AuthenticationError> => {
+  const redirectUri = browser.identity.getRedirectURL();
   const scope = 'user-read-private user-read-currently-playing';
   const state = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  const codeVerifier = generateCodeVerifier();
+  const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  const {
-    access_token: accessToken,
-    expires_in: expiresIn
-  } = await getTokenResponse(client_id, redirect_uri, state, scope);
-  browser.storage.local.set({
-    accessToken,
-    expiresAt: Date.now() + Number(expiresIn) * 1000,
+  const { code, error, state: responseState } = await authorize({
+    client_id: clientId,
+    response_type: 'code',
+    redirect_uri: redirectUri,
+    code_challenge_method: 'S256',
+    code_challenge: codeChallenge,
+    state,
+    scope,
   });
 
-  return fetch('https://api.spotify.com/v1/me', {
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-    },
-  }).then((response) => response.json()).then((data) => {
-    browser.storage.local.set({
-      userName: data.display_name,
-      isPremium: data.product === 'premium',
-    });
+  if (error || code === undefined) {
+    return new AuthorizationError(error);
+  }
 
-    return data;
+  if (state !== responseState) {
+    return new UnmatchStateError('The `state` value of the response is not match the stored `state` value.');
+  }
+
+  return await exchangeCodeForToken({
+    client_id: clientId,
+    grant_type: 'authorization_code',
+    code,
+    redirect_uri: redirectUri,
+    code_verifier: codeVerifier,
   });
 };

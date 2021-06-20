@@ -4,6 +4,7 @@
     "sourceMap": true,
     "module": "esnext",
     "target": "es6",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
