@@ -19,10 +19,45 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+    "semi": ["error", "always"],
     "@typescript-eslint/indent": ["error", 2],
+    "object-curly-spacing": ["error", "always"],
+    "arrow-parens": ["error", "always"],
+    "block-spacing": "error",
+    "comma-dangle": ["error", "always-multiline"],
     "@typescript-eslint/explicit-function-return-type": ["warn", {
       "allowExpressions": true,
       "allowTypedFunctionExpressions": true
-    }]
+    }],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["variableLike", "parameterProperty", "accessor", "enumMember", "method"],
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow"
+      },
+      {
+        "selector": "property",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow",
+        "filter": {
+          "regex": "^(Authorization|client_id|response_type|redirect_uri|code_challenge_method|code_challenge|grant_type|code_verifier|access_token|token_type|expires_in|refresh_token)$",
+          "match": false
+        }
+      },
+      {
+        "selector": "variable",
+        "format": ["camelCase", "UPPER_CASE"],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow"
+      },
+
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      }
+    ]
   }
 }
