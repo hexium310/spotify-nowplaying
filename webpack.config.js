@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const loaders = {
   typescript: {
@@ -14,6 +15,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts',],
+    plugins: [
+      new TsconfigPathsPlugin(),
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

@@ -1,7 +1,7 @@
 import { browser } from 'webextension-polyfill-ts';
-import { login, refleshAccessToken } from './utils';
 
-import { SpotifyNowplayingStorage } from './types';
+import { login, refleshAccessToken } from '~utils';
+import { SpotifyNowplayingStorage } from '~types';
 import config from '../config.json';
 const { client_id: clientId } = config;
 

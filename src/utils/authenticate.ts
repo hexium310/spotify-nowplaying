@@ -1,6 +1,6 @@
 import { browser } from 'webextension-polyfill-ts';
 
-import { AuthorizationError, UnmatchStateError } from '../types';
+import { AuthorizationError, UnmatchStateError } from '~types';
 
 interface AuthorizationQueryParameter {
   client_id: string;
