@@ -6,12 +6,12 @@ export const login = async (): Promise<void> => {
   const data = await authenticate(clientId);
 
   if (data instanceof AuthorizationError) {
-    console.error(data.message);
+    console.log(data.message);
     return;
   }
 
   if (data instanceof UnmatchStateError) {
-    console.error(data.message);
+    console.log(data.message);
     return;
   }
 
