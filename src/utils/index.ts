@@ -1,7 +1,8 @@
 import { authenticate, exchangeForToken } from '~utils/authenticate';
 import { AuthorizationError, UnmatchStateError } from '~types';
+import clientId from '~config';
 
-export const login = async (clientId: string): Promise<void> => {
+export const login = async (): Promise<void> => {
   const data = await authenticate(clientId);
 
   if (data instanceof AuthorizationError) {
@@ -35,7 +36,7 @@ export const login = async (clientId: string): Promise<void> => {
   });
 };
 
-export const refleshAccessToken = async (clientId: string, refreshToken: string): Promise<void> => {
+export const refleshAccessToken = async (refreshToken: string): Promise<void> => {
   const { expires_in: expiresIn, access_token: accessToken, refresh_token: newRefreshToken } = await exchangeForToken({
     client_id: clientId,
     grant_type: 'refresh_token',

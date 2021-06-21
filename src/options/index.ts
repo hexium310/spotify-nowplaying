@@ -2,8 +2,6 @@ import { browser } from 'webextension-polyfill-ts';
 
 import { login } from '~utils';
 import { SpotifyNowplayingStorage } from '~types';
-import config from '../../config.json';
-const { client_id: clientId } = config;
 
 (async () => {
   const { userName, isPremium } = await browser.storage.local.get(['userName', 'isPremium']) as SpotifyNowplayingStorage;
@@ -29,6 +27,6 @@ const { client_id: clientId } = config;
 
 const loginElement = document.getElementById('login') as HTMLElement;
 loginElement.addEventListener('click', async () => {
-  await login(clientId);
+  await login();
   browser.tabs.reload();
 });

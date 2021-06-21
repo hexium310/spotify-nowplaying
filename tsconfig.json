@@ -6,6 +6,7 @@
     "target": "es6",
     "baseUrl": ".",
     "paths": {
+      "~config": ["config.ts"],
       "~types": ["src/types/index.ts"],
       "~types/*": ["src/types/*"],
       "~utils": ["src/utils/index.ts"],
