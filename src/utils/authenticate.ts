@@ -18,9 +18,15 @@ interface RedirectQueryParameter {
   state?: string;
 }
 
+interface RefleshedTokenRequestBody extends Record<string, string> {
+  client_id: string;
+  grant_type: 'refresh_token';
+  refresh_token: string;
+}
+
 interface TokenRequestBody extends Record<string, string> {
   client_id: string;
-  grant_type: 'authorization_code' | 'refresh_token';
+  grant_type: 'authorization_code';
   code: string;
   redirect_uri: string;
   code_verifier: string;
@@ -59,11 +65,11 @@ export const authorize = async (params: AuthorizationQueryParameter): Promise<Re
     interactive: true,
   }).then((responseUrl) => {
     const url = new URL(responseUrl);
-    return Object.fromEntries(url.searchParams.entries());
+    return Object.fromEntries(url.searchParams);
   });
 };
 
-export const exchangeCodeForToken = async (params: TokenRequestBody): Promise<TokenResponse> => {
+export const exchangeForToken = async (params: TokenRequestBody | RefleshedTokenRequestBody): Promise<TokenResponse> => {
   const body = new URLSearchParams(params);
 
   return fetch('https://accounts.spotify.com/api/token', {
@@ -99,7 +105,7 @@ export const authenticate = async (clientId: string): Promise<TokenResponse | Au
     return new UnmatchStateError('The `state` value of the response is not match the stored `state` value.');
   }
 
-  return await exchangeCodeForToken({
+  return await exchangeForToken({
     client_id: clientId,
     grant_type: 'authorization_code',
     code,

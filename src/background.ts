@@ -1,45 +1,20 @@
 import { browser } from 'webextension-polyfill-ts';
-import { authenticate } from './utils/authenticate';
+import { login, refleshAccessToken } from './utils';
 
-import { SpotifyNowplayingStorage, AuthorizationError, UnmatchStateError } from './types';
+import { SpotifyNowplayingStorage } from './types';
 import config from '../config.json';
 const { client_id: clientId } = config;
 
 chrome.action.onClicked.addListener(async () => {
   const { expiresAt } = await browser.storage.local.get('expiresAt') as SpotifyNowplayingStorage;
-  if (!expiresAt || expiresAt < Date.now()) {
-    const data = await authenticate(clientId);
 
-    if (data instanceof AuthorizationError) {
-      console.error(data.message);
-      return;
-    }
+  if (!expiresAt) {
+    await login(clientId);
+  }
 
-    if (data instanceof UnmatchStateError) {
-      console.error(data.message);
-      return;
-    }
-
-    const { expires_in: expiresIn, access_token: accessToken, refresh_token: refreshToken } = data;
-
-    const { userName, isPremium } = await fetch('https://api.spotify.com/v1/me', {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-      },
-    }).then((response) => response.json()).then((data) => {
-      return {
-        userName: data.display_name,
-        isPremium: data.product === 'premium',
-      };
-    });
-
-    chrome.storage.local.set({
-      userName,
-      isPremium,
-      accessToken,
-      refreshToken,
-      expiresAt: Date.now() + Number(expiresIn) * 1000,
-    });
+  if (expiresAt < Date.now()) {
+    const { refreshToken } = await browser.storage.local.get('refreshToken') as SpotifyNowplayingStorage;
+    await refleshAccessToken(clientId, refreshToken);
   }
 
   const { accessToken } = await browser.storage.local.get('accessToken') as SpotifyNowplayingStorage;
