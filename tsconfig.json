@@ -3,7 +3,7 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "module": "esnext",
-    "target": "es6",
+    "target": "ES2020",
     "baseUrl": ".",
     "paths": {
       "~config": ["config.ts"],
@@ -23,6 +23,7 @@
     "resolveJsonModule": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./scripts/**/*.ts"
   ]
 }
