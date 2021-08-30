@@ -25,6 +25,12 @@
     "arrow-parens": ["error", "always"],
     "block-spacing": "error",
     "comma-dangle": ["error", "always-multiline"],
+    "no-empty": [
+      "error",
+      {
+        "allowEmptyCatch": true
+      }
+    ],
     "@typescript-eslint/explicit-function-return-type": ["warn", {
       "allowExpressions": true,
       "allowTypedFunctionExpressions": true
