@@ -6,7 +6,6 @@ import path from 'path';
 const copy = async (sourcePath: string, dest: string): Promise<void> => {
   try {
     await mkdir(path.dirname(dest), { recursive: true });
-    /* eslint-disable-next-line no-empty */
   } catch (_) { }
 
   copyFile(sourcePath, dest)
