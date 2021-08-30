@@ -32,6 +32,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       },
     },
     minify: !isDevelopment,
+    target: ['es2020'],
   }).then(() => {
     console.log('build finished' + (isDevelopment ? ', watching for changes...' : ''));
   }).catch(() => {
