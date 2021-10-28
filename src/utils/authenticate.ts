@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import { browser } from 'webextension-polyfill-ts';
 
 import { AuthorizationError, UnmatchStateError } from '~types';
@@ -44,7 +43,7 @@ interface TokenResponse {
 type AuthenticationError = AuthorizationError | UnmatchStateError;
 
 export const encodeToBase64 = (buffer: ArrayBuffer): string => {
-  return Buffer.from(buffer).toString('base64');
+  return btoa(String.fromCharCode(...new Uint8Array(buffer)));
 };
 
 export const escapeForUrl = (base64: string): string => {
