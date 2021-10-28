@@ -1,21 +1,19 @@
-import { browser } from 'webextension-polyfill-ts';
-
 import { login, refleshAccessToken } from '~utils';
 import { SpotifyNowplayingStorage } from '~types';
 
 chrome.action.onClicked.addListener(async () => {
-  const { expiresAt } = await browser.storage.local.get('expiresAt') as SpotifyNowplayingStorage;
+  const { expiresAt } = await chrome.storage.local.get('expiresAt') as SpotifyNowplayingStorage;
 
   if (!expiresAt) {
     await login();
   }
 
   if (expiresAt < Date.now()) {
-    const { refreshToken } = await browser.storage.local.get('refreshToken') as SpotifyNowplayingStorage;
+    const { refreshToken } = await chrome.storage.local.get('refreshToken') as SpotifyNowplayingStorage;
     await refleshAccessToken(refreshToken);
   }
 
-  const { accessToken } = await browser.storage.local.get('accessToken') as SpotifyNowplayingStorage;
+  const { accessToken } = await chrome.storage.local.get('accessToken') as SpotifyNowplayingStorage;
   if (!accessToken) {
     return;
   }

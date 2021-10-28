@@ -1,10 +1,8 @@
-import { browser } from 'webextension-polyfill-ts';
-
 import { login } from '~utils';
 import { SpotifyNowplayingStorage } from '~types';
 
 (async () => {
-  const { userName, isPremium } = await browser.storage.local.get(['userName', 'isPremium']) as SpotifyNowplayingStorage;
+  const { userName, isPremium } = await chrome.storage.local.get(['userName', 'isPremium']) as SpotifyNowplayingStorage;
 
   const mainElement = document.getElementById('main') as HTMLElement;
   if (userName && !isPremium) {
@@ -28,5 +26,5 @@ import { SpotifyNowplayingStorage } from '~types';
 const loginElement = document.getElementById('login') as HTMLElement;
 loginElement.addEventListener('click', async () => {
   await login();
-  browser.tabs.reload();
+  chrome.tabs.reload();
 });
