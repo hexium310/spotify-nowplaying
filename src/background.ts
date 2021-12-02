@@ -21,6 +21,7 @@ chrome.action.onClicked.addListener(async () => {
   const { item } = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
     headers: {
       'Authorization': `Bearer ${accessToken}`,
+      'Accept-Language': 'en;q=1.0, *;q=0.9',
     },
   }).then((response) => response.json()).then((data) => data);
   if (!item) {
