@@ -7,6 +7,7 @@
   "parserOptions": {
     "project": "./tsconfig.json",
     "sourceType": "module",
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
       "jsx": true,
       "modules": true
@@ -38,14 +39,22 @@
       "always"
     ],
     "block-spacing": "error",
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
+    "comma-dangle": "off",
     "no-empty": [
       "error",
       {
         "allowEmptyCatch": true
+      }
+    ],
+    "@typescript-eslint/comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "enums": "always-multiline",
+        "tuples": "always-multiline"
       }
     ],
     "@typescript-eslint/explicit-function-return-type": [
