@@ -48,7 +48,7 @@ rules:
       trailingUnderscore: allow
     - filter:
         match: false
-        regex: ^(Authorization|Accept-Language|client_id|response_type|redirect_uri|code_challenge_method|code_challenge|grant_type|code_verifier|access_token|token_type|expires_in|refresh_token)$
+        regex: ^(Authorization|Accept-Language)$
       format:
         - camelCase
       leadingUnderscore: allow

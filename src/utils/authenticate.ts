@@ -1,11 +1,14 @@
+import camelcaseKeys from 'camelcase-keys';
+import snakecaseKeys from 'snakecase-keys';
+
 import { AuthorizationError, UnmatchStateError } from '~types';
 
 interface AuthorizationQueryParameter {
-  client_id: string;
-  response_type: 'code';
-  redirect_uri: string;
-  code_challenge_method: 'S256';
-  code_challenge: string;
+  clientId: string;
+  responseType: 'code';
+  redirectUri: string;
+  codeChallengeMethod: 'S256';
+  codeChallenge: string;
   state?: string;
   scope?: string;
 }
@@ -17,25 +20,25 @@ interface RedirectQueryParameter {
 }
 
 interface RefleshedTokenRequestBody extends Record<string, string> {
-  client_id: string;
-  grant_type: 'refresh_token';
-  refresh_token: string;
+  clientId: string;
+  grantType: 'refresh_token';
+  refreshToken: string;
 }
 
 interface TokenRequestBody extends Record<string, string> {
-  client_id: string;
-  grant_type: 'authorization_code';
+  clientId: string;
+  grantType: 'authorization_code';
   code: string;
-  redirect_uri: string;
-  code_verifier: string;
+  redirectUri: string;
+  codeVerifier: string;
 }
 
 interface TokenResponse {
-  access_token: string;
-  token_type: string;
+  accessToken: string;
+  tokenType: string;
   scope: string;
-  expires_in: string;
-  refresh_token: string;
+  expiresIn: string;
+  refreshToken: string;
 }
 
 type AuthenticationError = AuthorizationError | UnmatchStateError;
@@ -60,7 +63,7 @@ export const generateCodeChallenge = async (verifier: string): Promise<string> =
 export const authorize = async (params: AuthorizationQueryParameter): Promise<RedirectQueryParameter> => {
   return new Promise((resolve, reject) => {
     chrome.identity.launchWebAuthFlow({
-      url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(params as Required<AuthorizationQueryParameter>).toString(),
+      url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(snakecaseKeys(params as Required<AuthorizationQueryParameter>)).toString(),
       interactive: true,
     }, (responseUrl) => {
       if (responseUrl === undefined) {
@@ -74,13 +77,13 @@ export const authorize = async (params: AuthorizationQueryParameter): Promise<Re
 };
 
 export const exchangeForToken = async (params: TokenRequestBody | RefleshedTokenRequestBody): Promise<TokenResponse> => {
-  const body = new URLSearchParams(params);
+  const body = new URLSearchParams(snakecaseKeys(params));
 
   return fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     body,
-  }).then((response) => response.json()).then((data: TokenResponse) => {
-    return data;
+  }).then((response) => response.json()).then((data) => {
+    return camelcaseKeys<TokenResponse>(data);
   });
 };
 
@@ -92,11 +95,11 @@ export const authenticate = async (clientId: string): Promise<TokenResponse | Au
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
   const { code, error, state: responseState } = await authorize({
-    client_id: clientId,
-    response_type: 'code',
-    redirect_uri: redirectUri,
-    code_challenge_method: 'S256',
-    code_challenge: codeChallenge,
+    clientId,
+    responseType: 'code',
+    redirectUri: redirectUri,
+    codeChallengeMethod: 'S256',
+    codeChallenge: codeChallenge,
     state,
     scope,
   });
@@ -110,10 +113,10 @@ export const authenticate = async (clientId: string): Promise<TokenResponse | Au
   }
 
   return await exchangeForToken({
-    client_id: clientId,
-    grant_type: 'authorization_code',
+    clientId,
+    grantType: 'authorization_code',
     code,
-    redirect_uri: redirectUri,
-    code_verifier: codeVerifier,
+    redirectUri: redirectUri,
+    codeVerifier: codeVerifier,
   });
 };

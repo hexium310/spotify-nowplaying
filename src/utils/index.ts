@@ -15,7 +15,7 @@ export const login = async (): Promise<void> => {
     return;
   }
 
-  const { expires_in: expiresIn, access_token: accessToken, refresh_token: refreshToken } = data;
+  const { expiresIn, accessToken, refreshToken } = data;
 
   const user = await fetch('https://api.spotify.com/v1/me', {
     headers: {
@@ -37,10 +37,10 @@ export const login = async (): Promise<void> => {
 };
 
 export const refleshAccessToken = async (refreshToken: string): Promise<void> => {
-  const { expires_in: expiresIn, access_token: accessToken, refresh_token: newRefreshToken } = await exchangeForToken({
-    client_id: clientId,
-    grant_type: 'refresh_token',
-    refresh_token: refreshToken,
+  const { expiresIn, accessToken, refreshToken: newRefreshToken } = await exchangeForToken({
+    clientId: clientId,
+    grantType: 'refresh_token',
+    refreshToken: refreshToken,
   });
   chrome.storage.local.set({
     accessToken,
