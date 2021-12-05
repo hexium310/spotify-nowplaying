@@ -1,5 +1,3 @@
-import { browser } from 'webextension-polyfill-ts';
-
 import { AuthorizationError, UnmatchStateError } from '~types';
 
 interface AuthorizationQueryParameter {
@@ -60,12 +58,18 @@ export const generateCodeChallenge = async (verifier: string): Promise<string> =
 };
 
 export const authorize = async (params: AuthorizationQueryParameter): Promise<RedirectQueryParameter> => {
-  return browser.identity.launchWebAuthFlow({
-    url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(params as Required<AuthorizationQueryParameter>).toString(),
-    interactive: true,
-  }).then((responseUrl) => {
-    const url = new URL(responseUrl);
-    return Object.fromEntries(url.searchParams);
+  return new Promise((resolve, reject) => {
+    chrome.identity.launchWebAuthFlow({
+      url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(params as Required<AuthorizationQueryParameter>).toString(),
+      interactive: true,
+    }, (responseUrl) => {
+      if (responseUrl === undefined) {
+        reject();
+        return;
+      }
+      const url = new URL(responseUrl);
+      resolve(Object.fromEntries(url.searchParams));
+    });
   });
 };
 
@@ -81,7 +85,7 @@ export const exchangeForToken = async (params: TokenRequestBody | RefleshedToken
 };
 
 export const authenticate = async (clientId: string): Promise<TokenResponse | AuthenticationError> => {
-  const redirectUri = browser.identity.getRedirectURL();
+  const redirectUri = chrome.identity.getRedirectURL();
   const scope = 'user-read-private user-read-currently-playing';
   const state = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   const codeVerifier = generateCodeVerifier();
