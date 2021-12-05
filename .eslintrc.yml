@@ -1,0 +1,98 @@
+env:
+  browser: true
+  es6: true
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:import/recommended
+  - plugin:import/typescript
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+    modules: true
+  ecmaVersion: latest
+  project: ./tsconfig.json
+  sourceType: module
+plugins:
+  - '@typescript-eslint'
+  - import
+root: true
+rules:
+  '@typescript-eslint/comma-dangle':
+    - error
+    - arrays: always-multiline
+      enums: always-multiline
+      exports: always-multiline
+      imports: always-multiline
+      objects: always-multiline
+      tuples: always-multiline
+  '@typescript-eslint/explicit-function-return-type':
+    - warn
+    - allowExpressions: true
+      allowTypedFunctionExpressions: true
+  '@typescript-eslint/indent':
+    - error
+    - 2
+  '@typescript-eslint/naming-convention':
+    - error
+    - format:
+        - camelCase
+      leadingUnderscore: allow
+      selector:
+        - variableLike
+        - parameterProperty
+        - accessor
+        - enumMember
+        - method
+      trailingUnderscore: allow
+    - filter:
+        match: false
+        regex: ^(Authorization|Accept-Language|client_id|response_type|redirect_uri|code_challenge_method|code_challenge|grant_type|code_verifier|access_token|token_type|expires_in|refresh_token)$
+      format:
+        - camelCase
+      leadingUnderscore: allow
+      selector: property
+      trailingUnderscore: allow
+    - format:
+        - camelCase
+        - UPPER_CASE
+      leadingUnderscore: allow
+      selector: variable
+      trailingUnderscore: allow
+    - format:
+        - PascalCase
+      selector: typeLike
+  arrow-parens:
+    - error
+    - always
+  block-spacing: error
+  comma-dangle: "off"
+  import/newline-after-import:
+    - error
+  import/order:
+    - error
+    - alphabetize:
+        order: asc
+      groups:
+        - builtin
+        - external
+        - - internal
+          - index
+          - sibling
+          - parent
+      newlines-between: always
+      warnOnUnassignedImports: true
+  no-empty:
+    - error
+    - allowEmptyCatch: true
+  object-curly-spacing:
+    - error
+    - always
+  semi:
+    - error
+    - always
+settings:
+  import/resolver:
+    typescript:
+      alwaysTryTypes: true
