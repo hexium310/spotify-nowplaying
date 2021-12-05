@@ -1,6 +1,6 @@
-import { authenticate, exchangeForToken } from '~utils/authenticate';
-import { AuthorizationError, UnmatchStateError } from '~types';
 import clientId from '~config';
+import { AuthorizationError, UnmatchStateError } from '~types';
+import { authenticate, exchangeForToken } from '~utils/authenticate';
 
 export const login = async (): Promise<void> => {
   const data = await authenticate(clientId);

@@ -1,7 +1,8 @@
-import chokidar, { FSWatcher } from 'chokidar';
 import fs from 'fs';
 import { copyFile, mkdir } from 'fs/promises';
 import path from 'path';
+
+import { watch, FSWatcher } from 'chokidar';
 
 const copy = async (sourcePath: string, dest: string): Promise<void> => {
   try {
@@ -19,12 +20,12 @@ const copy = async (sourcePath: string, dest: string): Promise<void> => {
     });
 };
 
-export const copyFiles = async (paths: { [s: string]: string }, watch: boolean): Promise<FSWatcher[]> => {
-  if (watch) {
-    const watchers = Object.keys(paths).map((s) => chokidar.watch(s));
+export const copyFiles = async (paths: { [s: string]: string }, isWatch: boolean): Promise<FSWatcher[]> => {
+  if (isWatch) {
+    const watchers = Object.keys(paths).map((s) => watch(s));
     for (const watcher of watchers) {
       watcher.on('add', async (path) => await copy(path, paths[path]));
-      watch && watcher.on('change', async (path) => await copy(path, paths[path]));
+      isWatch && watcher.on('change', async (path) => await copy(path, paths[path]));
     }
     return watchers;
   }

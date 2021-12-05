@@ -1,5 +1,5 @@
-import { login } from '~utils';
 import { SpotifyNowplayingStorage } from '~types';
+import { login } from '~utils';
 
 (async () => {
   const { userName, isPremium } = await chrome.storage.local.get(['userName', 'isPremium']) as SpotifyNowplayingStorage;

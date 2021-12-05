@@ -1,7 +1,8 @@
 {
   "root": true,
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "import"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,7 +20,9 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
   ],
   "rules": {
     "semi": [
@@ -45,6 +48,29 @@
       {
         "allowEmptyCatch": true
       }
+    ],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        },
+        "groups": [
+          "builtin",
+          "external",
+          [
+            "internal",
+            "index",
+            "sibling",
+            "parent"
+          ]
+        ],
+        "newlines-between": "always",
+        "warnOnUnassignedImports": true
+      }
+    ],
+    "import/newline-after-import": [
+      "error"
     ],
     "@typescript-eslint/comma-dangle": [
       "error",
@@ -108,5 +134,12 @@
         ]
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
-import { login, refleshAccessToken } from '~utils';
 import { SpotifyNowplayingStorage } from '~types';
+import { login, refleshAccessToken } from '~utils';
 
 chrome.action.onClicked.addListener(async () => {
   const { expiresAt } = await chrome.storage.local.get('expiresAt') as SpotifyNowplayingStorage;
