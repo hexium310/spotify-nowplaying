@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc --noEmit && NODE_ENV=pdoduction node --require esbuild-register scripts/build.ts",
     "start": "NODE_ENV=development node --require esbuild-register scripts/build.ts",
-    "lint": "eslint 'src/**/*.ts'",
+    "lint": "eslint '**/*.{js,ts,tsx}' --ignore-path .gitignore",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
