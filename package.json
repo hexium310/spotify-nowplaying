@@ -12,16 +12,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.161",
+    "@types/chrome": "^0.0.166",
     "@types/tsc-watch": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "@typescript-eslint/parser": "^5.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
     "chokidar": "^3.5.2",
-    "esbuild": "^0.13.10",
-    "esbuild-register": "^3.0.0",
-    "eslint": "^8.1.0",
+    "esbuild": "^0.14.2",
+    "esbuild-register": "^3.2.0",
+    "eslint": "^8.4.0",
     "tsc-watch": "^4.5.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   },
   "dependencies": {}
 }
