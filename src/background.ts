@@ -24,13 +24,19 @@ chrome.action.onClicked.addListener(async () => {
       'Accept-Language': 'en;q=1.0, *;q=0.9',
     },
   }).then((response) => response.json()).then((data) => data);
+
   if (!item) {
     return;
   }
 
   const artists = item.artists.map(({ name }: { name: string }) => name).join(', ');
   const song = item.name;
-  const text = `${artists} - ${song}\n${item.external_urls.spotify}\n#NowPlaying`;
+  const externalUrl = item.external_urls.spotify || '';
+  const text = [
+    `${artists} - ${song}`,
+    `${externalUrl}`,
+    '#NowPlaying',
+  ].filter((v) => v).join('\n');
   const tweetWindow = await chrome.windows.create({
     url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
     type: 'popup',
