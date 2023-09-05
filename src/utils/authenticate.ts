@@ -83,7 +83,7 @@ export const exchangeForToken = async (params: TokenRequestBody | RefleshedToken
     method: 'POST',
     body,
   }).then((response) => response.json()).then((data) => {
-    return camelcaseKeys<TokenResponse>(data);
+    return camelcaseKeys(data);
   });
 };
 
