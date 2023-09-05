@@ -21,7 +21,7 @@
     "esbuild": "^0.14.2",
     "esbuild-register": "^3.2.0",
     "eslint": "^8.48.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-import": "^2.25.3",
     "snakecase-keys": "^5.4.6",
     "tsc-watch": "^4.5.0",
