@@ -8,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 (async () => {
   const tscWatch = new TscWatchClient();
   // Improve type checking because `tsc --watch` clears a terminal
-  isDevelopment && tscWatch.start('--noEmit');
+  isDevelopment && tscWatch.start('--noEmit', '--noClear');
 
   const copyWatchers = await copyFiles({
     'src/manifest.json': 'dist/manifest.json',
