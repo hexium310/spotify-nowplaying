@@ -1,5 +1,5 @@
 import { build } from 'esbuild';
-import TscWatchClient from 'tsc-watch/client';
+import { TscWatchClient } from 'tsc-watch/client';
 
 import { copyFiles } from './copy';
 
