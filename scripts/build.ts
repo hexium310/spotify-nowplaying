@@ -1,4 +1,4 @@
-import { build } from 'esbuild';
+import esbuild from 'esbuild';
 import { TscWatchClient } from 'tsc-watch/client';
 
 import { copyFiles } from './copy';
@@ -15,26 +15,25 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     'src/options/index.html': 'dist/options/index.html',
   }, isDevelopment);
 
-  build({
+  const plugins: esbuild.Plugin[] = [{
+    name: 'display-message',
+    setup(build) {
+      build.onEnd((result) => {
+        console.log('builded: %o', result);
+      });
+    },
+  }];
+
+  const context = await esbuild.context({
     entryPoints: [
       'src/background.ts',
       'src/options/index.ts',
     ],
     outdir: 'dist',
     bundle: true,
-    watch: isDevelopment && {
-      onRebuild(error, result) {
-        if (error) {
-          console.error('watch build failed:', error);
-          return;
-        }
-        console.log('watch build succeeded:', result);
-      },
-    },
     minify: !isDevelopment,
     target: ['es2020'],
-  }).then(() => {
-    console.log('build finished' + (isDevelopment ? ', watching for changes...' : ''));
+    plugins,
   }).catch(() => {
     tscWatch.kill();
     for (const watcher of copyWatchers) {
@@ -42,4 +41,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     }
     process.exit(1);
   });
+
+  await context.watch();
+  !isDevelopment && await context.dispose();
 })();
