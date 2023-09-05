@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - directory: /
+    package-ecosystem: github-actions
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "00:00"
+      timezone: Asia/Tokyo
+  - directory: /
+    package-ecosystem: npm
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "00:00"
+      timezone: Asia/Tokyo
+    versioning-strategy: increase
