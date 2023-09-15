@@ -234,10 +234,10 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.1.tgz#0480eeb7221eb9bc398ad7432c9d7e14b1a5a367"
   integrity sha512-cJRQXpObxfNKkFAZbJl2yjWtJCqELQIdShsogr1d2MilP8dKD9TE/nEKHkJgUNHdGKCQaf9HbIynuV2csLGVLg==
 
-"@types/tsc-watch@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@types/tsc-watch/-/tsc-watch-4.2.0.tgz#5a9553c4652e8feffdb3735e75f78b5191384acc"
-  integrity sha512-hND5B6WVQcO9QdgSdRHeougv4EAEeg5UYMrVACbFfFJ/EaEbdJgYd+mHtIVwgrHSf1eucQRxuFQ9b2jIlnsT7A==
+"@types/tsc-watch@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@types/tsc-watch/-/tsc-watch-4.2.1.tgz#6151250b6d908634ff5ef841bf832ba66f9a53b1"
+  integrity sha512-klBMLwU5uBgCMPR0t95gqGsK5hl1qnMgf3nNAqjZCwQ11ejfRAjy0aaXXVD68rdBR++Lzc2OPBFxx/A8cgn+tg==
   dependencies:
     "@types/node" "*"
 
