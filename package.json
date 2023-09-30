@@ -18,7 +18,7 @@
     "@typescript-eslint/parser": "^6.7.3",
     "camelcase-keys": "^9.1.0",
     "chokidar": "^3.5.3",
-    "esbuild": "^0.19.3",
+    "esbuild": "^0.19.4",
     "esbuild-register": "^3.5.0",
     "eslint": "^8.50.0",
     "eslint-import-resolver-typescript": "^3.6.1",
