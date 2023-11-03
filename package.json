@@ -16,7 +16,7 @@
     "@types/tsc-watch": "^4.2.2",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
-    "camelcase-keys": "^9.1.0",
+    "camelcase-keys": "^9.1.2",
     "chokidar": "^3.5.3",
     "esbuild": "^0.19.5",
     "esbuild-register": "^3.5.0",
