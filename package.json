@@ -14,7 +14,7 @@
   "devDependencies": {
     "@types/chrome": "^0.0.246",
     "@types/tsc-watch": "^4.2.2",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.9.0",
     "camelcase-keys": "^9.1.0",
     "chokidar": "^3.5.3",
