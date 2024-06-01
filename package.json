@@ -24,7 +24,7 @@
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
     "snakecase-keys": "^8.0.1",
-    "tsc-watch": "^6.0.4",
+    "tsc-watch": "^6.2.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {}
