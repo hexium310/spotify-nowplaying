@@ -23,4 +23,4 @@ A Chrome extension that tweets the song you are listening to on Spotify
 1. Open your Spotify app settings to input `https://<copied-extension-id>.chromiumapp.org/` to `Redirect URIs` and save the settings  
   Replace `<copied-extension-id>` by the extension id you just copied now. For example, when the extension id is `ehjnkeeomghenaiaaioaabggalacbfbg`, the URL you input is `https://ehjnkeeomghenaiaaioaabggalacbfbg.chromiumapp.org/`.
 1. Excellent! By clicking the `[S]` icon on toolbar, you can tweet the song you are listening to on Spotify!  
-  A tweet page `https://twitter.com/intet/tweet` with a song information will be opened. Also, the authorization page where the permission is requested to access your account data will be opened at first.
+  A tweet page `https://x.com/intet/post` with a song information will be opened. Also, the authorization page where the permission is requested to access your account data will be opened at first.

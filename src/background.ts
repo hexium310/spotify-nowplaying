@@ -38,7 +38,7 @@ chrome.action.onClicked.addListener(async () => {
     '#NowPlaying',
   ].filter((v) => v).join('\n');
   const tweetWindow = await chrome.windows.create({
-    url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
+    url: `https://x.com/intent/post?text=${encodeURIComponent(text)}`,
     type: 'popup',
     width: 550,
     height: 450,
@@ -50,7 +50,7 @@ chrome.action.onClicked.addListener(async () => {
       return;
     }
 
-    if (changeInfo.status === 'loading' && changeInfo.url === `https://twitter.com/`) {
+    if (changeInfo.status === 'loading' && changeInfo.url === `https://x.com/`) {
       chrome.tabs.onUpdated.removeListener(onUpdated);
       chrome.tabs.remove(id);
     }
