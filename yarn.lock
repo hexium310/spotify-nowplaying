@@ -229,10 +229,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.9.tgz#a70ec9d8fa0180a314c3ede0e20ea56ff71aed9a"
   integrity sha512-PcGNd//40kHAS3sTlzKB9C9XL4K0sTup8nbG5lC14kzEteTNuAFh9u5nA0o5TWnSG2r/JNPRXFVcHJIIeRlmqQ==
 
-"@types/tsc-watch@^4.2.2":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@types/tsc-watch/-/tsc-watch-4.2.2.tgz#35628d905ca4533c639100c34646487623c5f011"
-  integrity sha512-EH9w0gjerztmQvKGS6gNK597BtnzdK6eCts8wKk+JSJNJWimuUewfUU+EilxPZ8Xcr5X0/465xxzHll1JDpsKg==
+"@types/tsc-watch@^4.2.3":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/@types/tsc-watch/-/tsc-watch-4.2.3.tgz#066f8e2d3f43f06ee0352556c067b2eea5259674"
+  integrity sha512-8auVATN0hmfF0/bFAsx16OZ7KSiro6FOJ6ek06r+ud/A24WB8SRYaKmF316Gw9dmQuA4n+l3m/xTgh80Xcynng==
   dependencies:
     "@types/node" "*"
 
