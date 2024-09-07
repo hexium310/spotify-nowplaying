@@ -22,7 +22,7 @@
     "esbuild-register": "^3.6.0",
     "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.3",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.30.0",
     "snakecase-keys": "^8.0.1",
     "tsc-watch": "^6.2.0",
     "typescript": "^5.5.4"
