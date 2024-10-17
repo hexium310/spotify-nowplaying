@@ -28,3 +28,7 @@ loginElement.addEventListener('click', async () => {
   await login();
   chrome.tabs.reload();
 });
+
+const redirectUrl = chrome.identity.getRedirectURL();
+const redirectUrlElement = document.getElementById('redirectUrl') as HTMLSpanElement;
+redirectUrlElement.innerText = redirectUrl;
