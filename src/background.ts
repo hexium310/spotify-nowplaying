@@ -1,6 +1,14 @@
 import { SpotifyNowplayingStorage } from '~types';
 import { login, refleshAccessToken } from '~utils';
 
+// statuses of changeInfo after tweet is posted
+const acceptedStatuses = [
+  // In Firefox, changeInfo is { status: 'complete', url: 'https://x.com/' }
+  'complete',
+  // In Google Chrome, changeInfo is { status: 'loading', url: 'https://x.com/' }
+  'loading',
+];
+
 chrome.action.onClicked.addListener(async () => {
   const { expiresAt } = await chrome.storage.local.get('expiresAt') as SpotifyNowplayingStorage;
 
@@ -50,7 +58,7 @@ chrome.action.onClicked.addListener(async () => {
       return;
     }
 
-    if (changeInfo.status === 'loading' && changeInfo.url === `https://x.com/`) {
+    if (acceptedStatuses.includes(changeInfo.status || '') && changeInfo.url === 'https://x.com/') {
       chrome.tabs.onUpdated.removeListener(onUpdated);
       chrome.tabs.remove(id);
     }
