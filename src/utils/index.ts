@@ -19,7 +19,7 @@ export const login = async (): Promise<void> => {
 
   const user = await fetch('https://api.spotify.com/v1/me', {
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   }).then((response) => response.json()).then((data) => {
     return {

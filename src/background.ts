@@ -53,7 +53,7 @@ chrome.action.onClicked.addListener(async () => {
   });
 
   const tabId = tweetWindow.tabs && tweetWindow.tabs[0].id;
-  const onUpdated: Parameters<chrome.tabs.TabUpdatedEvent["addListener"]>[0] = (id, changeInfo) => {
+  const onUpdated: Parameters<chrome.tabs.TabUpdatedEvent['addListener']>[0] = (id, changeInfo) => {
     if (id !== tabId) {
       return;
     }
