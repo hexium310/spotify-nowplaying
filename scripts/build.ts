@@ -8,12 +8,16 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 (async () => {
   const tscWatch = new TscWatchClient();
   // Improve type checking because `tsc --watch` clears a terminal
-  isDevelopment && tscWatch.start('--noEmit', '--noClear');
+  if (isDevelopment) {
+    tscWatch.start('--noEmit', '--noClear');
+  }
 
+  /* eslint-disable @typescript-eslint/naming-convention */
   const copyWatchers = await copyFiles({
     'src/manifest.json': 'dist/manifest.json',
     'src/options/index.html': 'dist/options/index.html',
   }, isDevelopment);
+  /* eslint-enable @typescript-eslint/naming-convention */
 
   const plugins: esbuild.Plugin[] = [{
     name: 'display-message',
@@ -43,5 +47,10 @@ const isDevelopment = process.env.NODE_ENV === 'development';
   });
 
   await context.watch();
-  !isDevelopment && await context.dispose();
+
+  if (isDevelopment) {
+    return;
+  }
+
+  await context.dispose();
 })();
