@@ -14,9 +14,5 @@ updates:
       day: saturday
       time: "00:00"
       timezone: Asia/Tokyo
-    groups:
-      typescript-eslint:
-        patterns:
-          - '@typescript-eslint/*'
     versioning-strategy: increase
     open-pull-requests-limit: 50
