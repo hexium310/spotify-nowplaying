@@ -7,8 +7,7 @@ import { watch, FSWatcher } from 'chokidar';
 const copy = async (sourcePath: string, dest: string): Promise<void> => {
   try {
     await mkdir(path.dirname(dest), { recursive: true });
-  }
-  catch (_) { }
+  } catch (_) { }
 
   copyFile(sourcePath, dest)
     .then(() => {

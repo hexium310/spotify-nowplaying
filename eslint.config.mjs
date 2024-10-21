@@ -30,6 +30,7 @@ export default [
   js.configs.recommended,
   importPlugin.flatConfigs.recommended,
   stylistic.configs.customize({
+    braceStyle: '1tbs',
     semi: true,
   }),
   {
