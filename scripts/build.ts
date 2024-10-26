@@ -37,6 +37,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     bundle: true,
     minify: !isDevelopment,
     target: ['es2023'],
+    format: 'esm',
     plugins,
   }).catch(() => {
     tscWatch.kill();
