@@ -13,13 +13,27 @@
     padding: 5px;
   }
 
-  .notPremium {
+  .not-premium {
+    display: none;
     white-space: nowrap;
+  }
+
+  .user-name {
+    display: none;
   }
   </style>
 </head>
 <body>
   <div id="main" class="main mx-auto">
+    <p id="notPremium" class="not-premium alert alert-danger">
+      ログイン中のユーザーは Spotify Premium ではありません。
+      <br>
+      Spotify-NowPlaying は Spotify Premium でのみ動作します。
+    </p>
+    <p id="userName" class="user-name">
+      <i class="bi-person-fill-check">
+      </i>
+    </p>
     <p>
       Open your Spotify app setting in <a href="https://developer.spotify.com/dashboard/" target="_blank" rel="noopener">https://developer.spotify.com/dashboard/</a>
       and add <code id="redirectUrl"></code> into Redirect URIs.
