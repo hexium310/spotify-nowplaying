@@ -5,32 +5,15 @@
     <title>Options</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-    .main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px;
-    }
-
-    .not-premium {
-      display: none;
-      white-space: nowrap;
-    }
-
-    .user-name {
-      display: none;
-    }
-    </style>
   </head>
   <body>
-    <div id="main" class="main mx-auto">
-      <p id="notPremium" class="not-premium alert alert-danger">
+    <div id="main" class="d-flex flex-column align-items-center p-4 mx-auto container">
+      <p id="notPremium" class="d-none text-nowrap alert alert-danger">
         ログイン中のユーザーは Spotify Premium ではありません。
         <br>
         Spotify-NowPlaying は Spotify Premium でのみ動作します。
       </p>
-      <p id="userName" class="user-name">
+      <p id="userName" class="d-none">
         <i class="bi-person-fill-check">
         </i>
       </p>
