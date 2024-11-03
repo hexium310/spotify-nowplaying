@@ -17,9 +17,6 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Generate config file
-        run: |
-          cp ./config.ts.orig ./config.ts
       - name: Lint
         run: yarn lint
       - name: Build

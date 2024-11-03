@@ -6,12 +6,6 @@ A Chrome extension that tweets the song you are listening to on Spotify
 
 1. Clone this repository and cd to it
 1. Create a Spotify app from [Spotify dashboard](https://developer.spotify.com/dashboard) and copy the client id
-1. Rename the file `config.ts.orig` to `config.ts` and insert your app client id into `''`
-    ```sh
-    mv config.ts{.orig,}
-    # Edit config.ts with your editor
-    vim config.ts
-    ```
 1. Build this project with the following command:
     ```sh
     yarn && yarn build

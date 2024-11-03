@@ -1,6 +1,5 @@
 dist/
 node_modules/
-config.ts
 
 # Yarn berry
 .pnp.*

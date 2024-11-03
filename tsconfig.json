@@ -6,7 +6,6 @@
     "target": "ES2023",
     "incremental": true,
     "paths": {
-      "~config": ["./config.ts"],
       "~types": ["./src/types/index.ts"],
       "~types/*": ["./src/types/*"],
       "~utils": ["./src/utils/index.ts"],
