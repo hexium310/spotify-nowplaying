@@ -1,6 +1,18 @@
 import { SpotifyNowplayingStorage } from '~types';
 import { login } from '~utils';
 
+const clientIdElement = document.getElementById('clientId') as HTMLInputElement;
+clientIdElement.value = (await chrome.storage.local.get('clientId') as SpotifyNowplayingStorage).clientId ?? '';
+clientIdElement.addEventListener('input', (event) => {
+  if (!(event.currentTarget instanceof HTMLInputElement)) {
+    return;
+  }
+
+  chrome.storage.local.set({
+    clientId: event.currentTarget.value,
+  });
+});
+
 const loginElement = document.getElementById('login') as HTMLElement;
 loginElement.addEventListener('click', async () => {
   await login();

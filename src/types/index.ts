@@ -1,6 +1,7 @@
 export interface SpotifyNowplayingStorage {
   userName: string;
   isPremium: boolean;
+  clientId: string;
   accessToken: string;
   refreshToken: string;
   expiresAt: number;

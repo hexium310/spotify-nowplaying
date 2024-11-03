@@ -1,8 +1,8 @@
-import clientId from '~config';
 import { AuthorizationError, UnmatchStateError } from '~types';
 import { authenticate, exchangeForToken } from '~utils/authenticate';
 
 export const login = async (): Promise<void> => {
+  const { clientId } = await chrome.storage.local.get('clientId') as SpotifyNowplayingStorage;
   const data = await authenticate(clientId);
 
   if (data instanceof AuthorizationError) {
@@ -37,6 +37,7 @@ export const login = async (): Promise<void> => {
 };
 
 export const refleshAccessToken = async (refreshToken: string): Promise<void> => {
+  const { clientId } = await chrome.storage.local.get('clientId') as SpotifyNowplayingStorage;
   const { expiresIn, accessToken, refreshToken: newRefreshToken } = await exchangeForToken({
     clientId: clientId,
     grantType: 'refresh_token',

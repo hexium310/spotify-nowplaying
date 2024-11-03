@@ -34,8 +34,15 @@
         <i class="bi-person-fill-check">
         </i>
       </p>
+      <div class="needs-validation was-validated" novalidate>
+        <label for="clientId" class ="form-label">Client ID</label>
+        <input type="text" id="clientId" class="form-control mb-4" placeholder="Your Spotify client ID" required>
+      </div>
       <p class="alert alert-info">
-        Open your Spotify app setting in <a href="https://developer.spotify.com/dashboard/" target="_blank" rel="noopener">https://developer.spotify.com/dashboard/</a>
+        Open your Spotify app setting in
+        <a href="https://developer.spotify.com/dashboard/" target="_blank" rel="noopener" class="alert-link">
+          https://developer.spotify.com/dashboard/
+        </a>
         and add <code id="redirectUrl"></code> into Redirect URIs.
       </p>
       <button id="login" class="btn btn-primary btn-block">Spotfiy にログイン</button>
