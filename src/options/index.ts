@@ -1,14 +1,14 @@
 import { SpotifyNowplayingStorage } from '~types';
-import { login } from '~utils';
+import { getStorage, login } from '~utils';
 
 const clientIdElement = document.getElementById('clientId') as HTMLInputElement;
-clientIdElement.value = (await chrome.storage.local.get('clientId') as SpotifyNowplayingStorage).clientId ?? '';
+clientIdElement.value = (await getStorage('clientId')).clientId ?? '';
 clientIdElement.addEventListener('input', (event) => {
   if (!(event.currentTarget instanceof HTMLInputElement)) {
     return;
   }
 
-  chrome.storage.local.set({
+  chrome.storage.local.set<SpotifyNowplayingStorage>({
     clientId: event.currentTarget.value,
   });
 });
@@ -23,7 +23,7 @@ const redirectUrl = chrome.identity.getRedirectURL();
 const redirectUrlElement = document.getElementById('redirectUrl') as HTMLSpanElement;
 redirectUrlElement.insertAdjacentText('afterbegin', redirectUrl);
 
-const { userName, isPremium } = await chrome.storage.local.get(['userName', 'isPremium']) as SpotifyNowplayingStorage;
+const { userName, isPremium } = await getStorage(['userName', 'isPremium']);
 
 if (userName && !isPremium) {
   const element = document.getElementById('notPremium') as HTMLParagraphElement;

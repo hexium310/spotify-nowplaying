@@ -1,9 +1,9 @@
-import { AuthorizationError, UnmatchStateError } from '~types';
+import { AuthorizationError, SpotifyNowplayingStorage, UnmatchStateError } from '~types';
 import { authenticate, exchangeForToken } from '~utils/authenticate';
 
 export const login = async (): Promise<void> => {
-  const { clientId } = await chrome.storage.local.get('clientId') as SpotifyNowplayingStorage;
-  const data = await authenticate(clientId);
+  const { clientId } = await getStorage('clientId');
+  const data = await authenticate(clientId ?? '');
 
   if (data instanceof AuthorizationError) {
     console.log(data.message);
@@ -28,7 +28,7 @@ export const login = async (): Promise<void> => {
     };
   });
 
-  chrome.storage.local.set({
+  chrome.storage.local.set<SpotifyNowplayingStorage>({
     ...user,
     accessToken,
     refreshToken,
@@ -37,15 +37,23 @@ export const login = async (): Promise<void> => {
 };
 
 export const refleshAccessToken = async (refreshToken: string): Promise<void> => {
-  const { clientId } = await chrome.storage.local.get('clientId') as SpotifyNowplayingStorage;
+  const { clientId } = await getStorage('clientId');
+  if (clientId === undefined) {
+    return;
+  }
+
   const { expiresIn, accessToken, refreshToken: newRefreshToken } = await exchangeForToken({
-    clientId: clientId,
+    clientId,
     grantType: 'refresh_token',
     refreshToken: refreshToken,
   });
-  chrome.storage.local.set({
+  chrome.storage.local.set<SpotifyNowplayingStorage>({
     accessToken,
     refreshToken: newRefreshToken,
     expiresAt: Date.now() + Number(expiresIn) * 1000,
   });
+};
+
+export const getStorage = async (keys: keyof SpotifyNowplayingStorage | (keyof SpotifyNowplayingStorage)[]): Promise<Partial<SpotifyNowplayingStorage>> => {
+  return await chrome.storage.local.get<SpotifyNowplayingStorage>(keys);
 };

@@ -1,5 +1,4 @@
-import { SpotifyNowplayingStorage } from '~types';
-import { login, refleshAccessToken } from '~utils';
+import { getStorage, login, refleshAccessToken } from '~utils';
 
 // statuses of changeInfo after tweet is posted
 const acceptedStatuses = [
@@ -10,18 +9,15 @@ const acceptedStatuses = [
 ];
 
 chrome.action.onClicked.addListener(async () => {
-  const { expiresAt } = await chrome.storage.local.get('expiresAt') as SpotifyNowplayingStorage;
+  const { expiresAt, refreshToken } = await getStorage(['expiresAt', 'refreshToken']);
 
-  if (!expiresAt) {
+  if (expiresAt === undefined || refreshToken === undefined) {
     await login();
-  }
-
-  if (expiresAt < Date.now()) {
-    const { refreshToken } = await chrome.storage.local.get('refreshToken') as SpotifyNowplayingStorage;
+  } else if (expiresAt < Date.now()) {
     await refleshAccessToken(refreshToken);
   }
 
-  const { accessToken } = await chrome.storage.local.get('accessToken') as SpotifyNowplayingStorage;
+  const { accessToken } = await getStorage('accessToken');
   if (!accessToken) {
     return;
   }
