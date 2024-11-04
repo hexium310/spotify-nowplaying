@@ -1,7 +1,7 @@
 import esbuild from 'esbuild';
-import { TscWatchClient } from 'tsc-watch/client';
+import { TscWatchClient } from 'tsc-watch/client.js';
 
-import { copyFiles } from './copy';
+import { copyFiles } from './copy.ts';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

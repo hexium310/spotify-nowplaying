@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "outDir": "./dist/",
     "sourceMap": true,
     "module": "Preserve",

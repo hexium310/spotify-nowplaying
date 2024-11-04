@@ -5,9 +5,11 @@
   "author": "Hexin",
   "license": "MIT",
   "repository": "https://github.com/hexium310/spotify-nowplaying",
+  "type": "module",
   "scripts": {
-    "build": "tsc --noEmit && NODE_ENV=pdoduction node --import jiti/register scripts/build.ts",
-    "start": "NODE_ENV=development node --import jiti/register scripts/build.ts",
+    "build": "tsc --noEmit && NODE_ENV=production yarn run nodets scripts/build.ts",
+    "nodets": "node --experimental-strip-types --experimental-transform-types --experimental-detect-module --no-warnings=ExperimentalWarning",
+    "start": "NODE_ENV=development yarn run nodets scripts/build.ts",
     "lint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,7 +26,6 @@
     "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.31.0",
     "globals": "^15.11.0",
-    "jiti": "^2.4.0",
     "snakecase-keys": "^8.0.1",
     "tsc-watch": "^6.2.0",
     "typescript": "^5.6.3",
