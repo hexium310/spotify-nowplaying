@@ -10,6 +10,7 @@
     "build": "tsc --noEmit && NODE_ENV=production yarn run nodets scripts/build.ts",
     "nodets": "node --experimental-strip-types --experimental-transform-types --experimental-detect-module --no-warnings=ExperimentalWarning",
     "start": "NODE_ENV=development yarn run nodets scripts/build.ts",
+    "update-version": "yarn nodets scripts/update-version.ts",
     "lint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
