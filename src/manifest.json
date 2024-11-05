@@ -27,7 +27,8 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "{523974bc-8875-4161-b172-ce6c3399f12d}"
+      "id": "{523974bc-8875-4161-b172-ce6c3399f12d}",
+      "update_url": "https://github.com/hexium310/spotify-nowplaying/raw/master/updates.json"
     }
   }
 }

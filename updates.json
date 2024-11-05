@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "{523974bc-8875-4161-b172-ce6c3399f12d}": {
+      "updates": [
+        {
+          "version": "0.5.1",
+          "update_link": "https://github.com/hexium310/spotify-nowplaying/releases/download/0.5.1/spotify-nowplaying.xpi"
+        }
+      ]
+    }
+  }
+}
