@@ -1,0 +1,36 @@
+name: CD
+on:
+  push:
+    tags:
+      - '**'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Enable corepack
+        run: corepack enable
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build
+        run: yarn build
+      - name: Create extension archive
+        working-directory: dist
+        run: 7z a -tzip -x'!tsconfig.tsbuildinfo' spotify-nowplaying.xpi *
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/spotify-nowplaying.xpi
+          fail_on_unmatched_files: true
+          make_latest: true
