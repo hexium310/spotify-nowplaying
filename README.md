@@ -2,19 +2,39 @@
 
 A Chrome extension that tweets the song you are listening to on Spotify
 
-## Installation
+## For Firefox
 
-1. Clone this repository and cd to it
-1. Create a Spotify app from [Spotify dashboard](https://developer.spotify.com/dashboard) and copy the client id
-1. Build this project with the following command:
-    ```sh
-    yarn && yarn build
-    ```
-1. Open `chrome://extensions/` in Google Chrome and load the `dist` directory.
-  Click `load unpacked` and select `dist` or drag and drop `dist` on the page.
-1. Copy the extension ID in the box of the added extension
-  ![image](https://user-images.githubusercontent.com/10758173/122782335-9aba9a00-d2eb-11eb-925c-6cdc948337db.png)
-1. Open your Spotify app settings to input `https://<copied-extension-id>.chromiumapp.org/` to `Redirect URIs` and save the settings  
-  Replace `<copied-extension-id>` by the extension id you just copied now. For example, when the extension id is `ehjnkeeomghenaiaaioaabggalacbfbg`, the URL you input is `https://ehjnkeeomghenaiaaioaabggalacbfbg.chromiumapp.org/`.
-1. Excellent! By clicking the `[S]` icon on toolbar, you can tweet the song you are listening to on Spotify!  
-  A tweet page `https://x.com/intet/post` with a song information will be opened. Also, the authorization page where the permission is requested to access your account data will be opened at first.
+### Installation
+
+This web extension is unsigned, so you cannot install it the stable version of Firefox. See below.
+
+> Unsigned extensions can be installed in the Developer Edition, Nightly, and ESR versions of Firefox,
+after toggling the xpinstall.signatures.required preference in about:config.
+https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/
+
+1. Download `spotify-nowplaying.xpi` from [releases][releases-latest] and install it
+
+### Usage
+
+#### Set up
+
+1. Create a Spotify app from [Spotify dashboard][spotify-dashboard] and copy the client id
+1. Paste the client id into Client ID in the option page of this extension
+1. Add the redirect URL displayed in the option page of this extension into Redirect URIs in [Spotify dashboard][spotify-dashboard]
+1. Click Login button in the option page of this extension
+
+After setup is complete, click the extension icon on toolbar to tweet the song you are listening to on Spotify.
+
+## For Google Chrome
+
+Use [5.1][]
+
+## Build
+
+```sh
+yarn && yarn build
+```
+
+[releases-latest]: https://github.com/hexium310/spotify-nowplaying/releases/latest
+[spotify-dashboard]: https://developer.spotify.com/dashboard
+[5.1]: https://github.com/hexium310/spotify-nowplaying/blob/0.5.1/README.md
