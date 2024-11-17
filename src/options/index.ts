@@ -1,37 +1,60 @@
 import { SpotifyNowplayingStorage } from '~types';
 import { getStorage, login } from '~utils';
 
-const clientIdElement = document.getElementById('clientId') as HTMLInputElement;
-clientIdElement.value = (await getStorage('clientId')).clientId ?? '';
-clientIdElement.addEventListener('input', (event) => {
-  if (!(event.currentTarget instanceof HTMLInputElement)) {
-    return;
+const showUserName = async (): Promise<void> => {
+  const { userName, isPremium } = await getStorage(['userName', 'isPremium']);
+
+  if (userName && !isPremium) {
+    const element = document.getElementById('notPremium') as HTMLParagraphElement;
+    element.style.setProperty('display', 'initial', 'important');
   }
 
-  chrome.storage.local.set<SpotifyNowplayingStorage>({
-    clientId: event.currentTarget.value,
+  if (userName) {
+    const element = document.getElementById('userName') as HTMLParagraphElement;
+    element.parentElement?.style.setProperty('display', 'initial', 'important');
+    element.textContent = userName;
+  }
+};
+
+const showClientId = async (): Promise<void> => {
+  const clientIdElement = document.getElementById('clientId') as HTMLInputElement;
+  clientIdElement.value = (await getStorage('clientId')).clientId ?? '';
+  clientIdElement.addEventListener('input', (event) => {
+    if (!(event.currentTarget instanceof HTMLInputElement)) {
+      return;
+    }
+
+    chrome.storage.local.set<SpotifyNowplayingStorage>({
+      clientId: event.currentTarget.value,
+    });
   });
-});
+};
 
-const loginElement = document.getElementById('login') as HTMLElement;
-loginElement.addEventListener('click', async () => {
-  await login();
-  chrome.tabs.reload();
-});
+const showLogin = async (): Promise<void> => {
+  const loginElement = document.getElementById('login') as HTMLButtonElement;
+  loginElement.addEventListener('click', async () => {
+    await login()
+      .then(showUserName)
+      .catch((e) => {
+        if (!(e instanceof Error)) {
+          return;
+        }
 
-const redirectUrl = chrome.identity.getRedirectURL();
-const redirectUrlElement = document.getElementById('redirectUrl') as HTMLSpanElement;
-redirectUrlElement.insertAdjacentText('afterbegin', redirectUrl);
+        const element = document.getElementById('error') as HTMLParagraphElement;
+        element.style.setProperty('display', 'initial', 'important');
+        element.textContent = `Failed to login: ${e.message}`;
 
-const { userName, isPremium } = await getStorage(['userName', 'isPremium']);
+        console.error(e);
+      });
+  });
+};
 
-if (userName && !isPremium) {
-  const element = document.getElementById('notPremium') as HTMLParagraphElement;
-  element.style.setProperty('display', 'initial', 'important');
-}
+const showRedirectUrl = async (): Promise<void> => {
+  const redirectUrlElement = document.getElementById('redirectUrl') as HTMLElement;
+  redirectUrlElement.textContent = chrome.identity.getRedirectURL();
+};
 
-if (userName) {
-  const element = document.getElementById('userName') as HTMLParagraphElement;
-  element.style.setProperty('display', 'initial', 'important');
-  element.insertAdjacentText('beforeend', userName);
-}
+showClientId();
+showLogin();
+showUserName();
+showRedirectUrl();

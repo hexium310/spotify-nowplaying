@@ -1,7 +1,8 @@
 import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
 
-import { AuthorizationError, UnmatchStateError } from '~types';
+import { AuthorizationError, InvalidStateError, UnexpectedError } from './errors';
+import { SpotifyNowplayingStorage } from '~types';
 
 interface AuthorizationQueryParameter {
   clientId: string;
@@ -13,22 +14,26 @@ interface AuthorizationQueryParameter {
   scope?: string;
 }
 
-interface RedirectQueryParameter {
-  code?: string;
-  error?: string;
-  state?: string;
+interface AuthorizationSuccessResponse {
+  code: AuthorizationCode;
+  state: string;
 }
 
-interface RefleshedTokenRequestBody extends Record<string, string> {
+interface AuthorizationFailureResponse {
+  error: string;
+  state: string;
+}
+
+interface RefreshTokenRequestBody {
   clientId: string;
   grantType: 'refresh_token';
   refreshToken: string;
 }
 
-interface TokenRequestBody extends Record<string, string> {
+interface TokenRequestBody {
   clientId: string;
   grantType: 'authorization_code';
-  code: string;
+  code: AuthorizationCode;
   redirectUri: string;
   codeVerifier: string;
 }
@@ -41,7 +46,8 @@ interface TokenResponse {
   refreshToken: string;
 }
 
-type AuthenticationError = AuthorizationError | UnmatchStateError;
+type AuthorizationCode = string;
+type AuthorizationResponse = AuthorizationSuccessResponse | AuthorizationFailureResponse;
 
 export const encodeToBase64 = (buffer: ArrayBuffer): string => {
   return window.btoa(String.fromCharCode(...new Uint8Array(buffer)));
@@ -60,24 +66,31 @@ export const generateCodeChallenge = async (verifier: string): Promise<string> =
   return escapeForUrl(encodeToBase64(buffer));
 };
 
-export const authorize = async (params: AuthorizationQueryParameter): Promise<RedirectQueryParameter> => {
-  return new Promise((resolve, reject) => {
-    chrome.identity.launchWebAuthFlow({
-      url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(snakecaseKeys(params as Required<AuthorizationQueryParameter>)).toString(),
-      interactive: true,
-    }, (responseUrl) => {
-      if (responseUrl === undefined) {
-        reject();
-        return;
-      }
-      const url = new URL(responseUrl);
-      resolve(Object.fromEntries(url.searchParams));
-    });
+export const requestAuthorization = async (params: AuthorizationQueryParameter): Promise<AuthorizationResponse> => {
+  const responseUrl = await chrome.identity.launchWebAuthFlow({
+    url: 'https://accounts.spotify.com/authorize?' + new URLSearchParams(snakecaseKeys(params as Required<AuthorizationQueryParameter>)).toString(),
+    interactive: true,
   });
+
+  if (responseUrl === undefined) {
+    throw new AuthorizationError('failed to authorize');
+  }
+
+  const responseParams = new URL(responseUrl).searchParams;
+
+  if (responseParams.get('code') !== null) {
+    return Object.fromEntries(responseParams) as unknown as AuthorizationSuccessResponse;
+  }
+
+  if (responseParams.get('error') !== null) {
+    return Object.fromEntries(responseParams) as unknown as AuthorizationFailureResponse;
+  }
+
+  throw new UnexpectedError('unexpected error occured');
 };
 
-export const exchangeForToken = async (params: TokenRequestBody | RefleshedTokenRequestBody): Promise<TokenResponse> => {
-  const body = new URLSearchParams(snakecaseKeys(params));
+export const getToken = async (params: TokenRequestBody | RefreshTokenRequestBody): Promise<TokenResponse> => {
+  const body = new URLSearchParams(snakecaseKeys({ ...params }));
 
   return fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
@@ -87,36 +100,41 @@ export const exchangeForToken = async (params: TokenRequestBody | RefleshedToken
   });
 };
 
-export const authenticate = async (clientId: string): Promise<TokenResponse | AuthenticationError> => {
-  const redirectUri = chrome.identity.getRedirectURL();
+export const authorize = async (clientId: string): Promise<AuthorizationCode> => {
   const scope = 'user-read-private user-read-currently-playing';
   const state = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  const { code, error, state: responseState } = await authorize({
-    clientId,
-    responseType: 'code',
-    redirectUri: redirectUri,
-    codeChallengeMethod: 'S256',
-    codeChallenge: codeChallenge,
-    state,
-    scope,
-  });
+  await chrome.storage.local.set<SpotifyNowplayingStorage>({ codeVerifier });
 
-  if (error || code === undefined) {
-    return new AuthorizationError(error);
+  const response = await (async () => {
+    try {
+      return await requestAuthorization({
+        clientId,
+        responseType: 'code',
+        redirectUri: chrome.identity.getRedirectURL(),
+        codeChallengeMethod: 'S256',
+        codeChallenge: codeChallenge,
+        state,
+        scope,
+      });
+    } catch (e) {
+      if (e instanceof AuthorizationError) {
+        throw e;
+      } else {
+        throw new UnexpectedError('unexpected error occured');
+      }
+    }
+  })();
+
+  if ('error' in response) {
+    throw new AuthorizationError(response.error);
   }
 
-  if (state !== responseState) {
-    return new UnmatchStateError('The `state` value of the response is not match the stored `state` value.');
+  if (state !== response.state) {
+    throw new InvalidStateError('The `state` value of the response is not match the stored `state` value.');
   }
 
-  return await exchangeForToken({
-    clientId,
-    grantType: 'authorization_code',
-    code,
-    redirectUri: redirectUri,
-    codeVerifier: codeVerifier,
-  });
+  return response.code;
 };

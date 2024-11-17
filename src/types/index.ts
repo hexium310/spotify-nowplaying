@@ -1,11 +1,9 @@
 export interface SpotifyNowplayingStorage {
-  userName: string;
-  isPremium: boolean;
-  clientId: string;
   accessToken: string;
-  refreshToken: string;
+  clientId: string;
+  codeVerifier: string;
   expiresAt: number;
+  isPremium: boolean;
+  refreshToken: string;
+  userName: string;
 }
-
-export class AuthorizationError extends Error {}
-export class UnmatchStateError extends Error {}

@@ -1,4 +1,4 @@
-import { getStorage, login, refleshAccessToken } from '~utils';
+import { getStorage, login, refreshAccessToken } from '~utils';
 
 // statuses of changeInfo after tweet is posted
 const acceptedStatuses = [
@@ -12,9 +12,16 @@ chrome.action.onClicked.addListener(async () => {
   const { expiresAt, refreshToken } = await getStorage(['expiresAt', 'refreshToken']);
 
   if (expiresAt === undefined || refreshToken === undefined) {
-    await login();
+    await login()
+      .catch((e) => {
+        if (e instanceof Error) {
+          console.error(e);
+        }
+
+        throw null;
+      });
   } else if (expiresAt < Date.now()) {
-    await refleshAccessToken(refreshToken);
+    await refreshAccessToken(refreshToken);
   }
 
   const { accessToken } = await getStorage('accessToken');

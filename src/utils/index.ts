@@ -1,21 +1,26 @@
-import { AuthorizationError, SpotifyNowplayingStorage, UnmatchStateError } from '~types';
-import { authenticate, exchangeForToken } from '~utils/authenticate';
+import { UndefinedStorageItemError } from './errors';
+import { SpotifyNowplayingStorage } from '~types';
+import { authorize, getToken } from '~utils/authenticate';
 
 export const login = async (): Promise<void> => {
   const { clientId } = await getStorage('clientId');
-  const data = await authenticate(clientId ?? '');
-
-  if (data instanceof AuthorizationError) {
-    console.log(data.message);
-    return;
+  if (clientId === undefined || clientId === '') {
+    throw new UndefinedStorageItemError('clientId is undefined');
   }
 
-  if (data instanceof UnmatchStateError) {
-    console.log(data.message);
-    return;
+  const authorizationCode = await authorize(clientId);
+  const { codeVerifier } = await getStorage('codeVerifier');
+  if (codeVerifier === undefined) {
+    throw new UndefinedStorageItemError('codeVerifier is undefined');
   }
 
-  const { expiresIn, accessToken, refreshToken } = data;
+  const { expiresIn, accessToken, refreshToken } = await getToken({
+    clientId,
+    grantType: 'authorization_code',
+    code: authorizationCode,
+    redirectUri: chrome.identity.getRedirectURL(),
+    codeVerifier,
+  });
 
   const user = await fetch('https://api.spotify.com/v1/me', {
     headers: {
@@ -36,13 +41,13 @@ export const login = async (): Promise<void> => {
   });
 };
 
-export const refleshAccessToken = async (refreshToken: string): Promise<void> => {
+export const refreshAccessToken = async (refreshToken: string): Promise<void> => {
   const { clientId } = await getStorage('clientId');
   if (clientId === undefined) {
-    return;
+    throw new UndefinedStorageItemError('clientId is undefined');
   }
 
-  const { expiresIn, accessToken, refreshToken: newRefreshToken } = await exchangeForToken({
+  const { expiresIn, accessToken, refreshToken: newRefreshToken } = await getToken({
     clientId,
     grantType: 'refresh_token',
     refreshToken: refreshToken,

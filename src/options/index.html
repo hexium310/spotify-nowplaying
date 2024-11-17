@@ -13,9 +13,10 @@
         <br>
         Spotify-NowPlaying は Spotify Premium でのみ動作します。
       </p>
-      <p id="userName" class="d-none">
+      <p class="d-none">
         <i class="bi-person-fill-check">
         </i>
+        <span id="userName"></span>
       </p>
       <div class="needs-validation was-validated" novalidate>
         <label for="clientId" class ="form-label">Client ID</label>
@@ -28,7 +29,9 @@
         </a>
         and add <code id="redirectUrl"></code> into Redirect URIs.
       </p>
-      <button id="login" class="btn btn-primary btn-block">Spotfiy にログイン</button>
+      <button id="login" class="btn btn-primary btn-block mb-4">Spotfiy にログイン</button>
+      <p id="error" class="d-none alert alert-danger">
+      </p>
     </div>
     <script src="index.js" type="module"></script>
   </body>
