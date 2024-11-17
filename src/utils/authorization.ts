@@ -102,7 +102,7 @@ export const getToken = async (params: TokenRequestBody | RefreshTokenRequestBod
 
 export const authorize = async (clientId: string): Promise<AuthorizationCode> => {
   const scope = 'user-read-private user-read-currently-playing';
-  const state = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  const state = crypto.randomUUID();
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
