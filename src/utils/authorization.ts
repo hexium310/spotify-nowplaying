@@ -49,21 +49,19 @@ interface TokenResponse {
 type AuthorizationCode = string;
 type AuthorizationResponse = AuthorizationSuccessResponse | AuthorizationFailureResponse;
 
-export const encodeToBase64 = (buffer: ArrayBuffer): string => {
-  return window.btoa(String.fromCharCode(...new Uint8Array(buffer)));
-};
-
 export const escapeForUrl = (base64: string): string => {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
 };
 
 export const generateCodeVerifier = (): string => {
-  return escapeForUrl(encodeToBase64(new Uint8Array(32)));
+  // @ts-expect-error: Uint8Array.prototype.toBase64 is available in Firefox 133.0 beta or later
+  return escapeForUrl(new Uint8Array(32).toBase64());
 };
 
 export const generateCodeChallenge = async (verifier: string): Promise<string> => {
   const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
-  return escapeForUrl(encodeToBase64(buffer));
+  // @ts-expect-error: Uint8Array.prototype.toBase64 is available in Firefox 133.0 beta or later
+  return escapeForUrl(new Uint8Array(buffer).toBase64());
 };
 
 export const requestAuthorization = async (params: AuthorizationQueryParameter): Promise<AuthorizationResponse> => {
