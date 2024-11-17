@@ -1,6 +1,6 @@
 import { UndefinedStorageItemError } from './errors';
 import { SpotifyNowplayingStorage } from '~types';
-import { authorize, getToken } from '~utils/authenticate';
+import { authorize, getToken } from '~utils/authorization';
 
 export const login = async (): Promise<void> => {
   const { clientId } = await getStorage('clientId');
