@@ -34,7 +34,12 @@ const showLogin = async (): Promise<void> => {
   const loginElement = document.getElementById('login') as HTMLButtonElement;
   loginElement.addEventListener('click', async () => {
     await login()
-      .then(showUserName)
+      .then(() => {
+        showUserName();
+
+        const element = document.getElementById('error') as HTMLParagraphElement;
+        element.style.removeProperty('display');
+      })
       .catch((e) => {
         if (!(e instanceof Error)) {
           return;
