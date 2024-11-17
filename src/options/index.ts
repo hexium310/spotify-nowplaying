@@ -27,11 +27,11 @@ const { userName, isPremium } = await getStorage(['userName', 'isPremium']);
 
 if (userName && !isPremium) {
   const element = document.getElementById('notPremium') as HTMLParagraphElement;
-  element.style.display = 'initial';
+  element.style.setProperty('display', 'initial', 'important');
 }
 
 if (userName) {
   const element = document.getElementById('userName') as HTMLParagraphElement;
-  element.style.display = 'initial';
+  element.style.setProperty('display', 'initial', 'important');
   element.insertAdjacentText('beforeend', userName);
 }
