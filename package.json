@@ -15,7 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.18.0",
     "@stylistic/eslint-plugin": "^2.13.0",
     "@types/chrome": "^0.0.293",
     "@types/tsc-watch": "^4.2.3",
