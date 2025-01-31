@@ -9,6 +9,10 @@ updates:
       timezone: Asia/Tokyo
   - directory: /
     package-ecosystem: npm
+    groups:
+      eslint:
+        patterns:
+          - "*eslint*"
     schedule:
       interval: weekly
       day: saturday
