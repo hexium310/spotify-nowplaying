@@ -25,7 +25,7 @@
     "eslint-config-flat-gitignore": "^2.0.0",
     "eslint-import-resolver-typescript": "^3.8.0",
     "eslint-plugin-import": "^2.31.0",
-    "globals": "^15.15.0",
+    "globals": "^16.0.0",
     "snakecase-keys": "^8.0.1",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.7.3",
