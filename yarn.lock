@@ -829,7 +829,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.31.0"
     globals: "npm:^16.1.0"
     snakecase-keys: "npm:^8.0.1"
-    tsc-watch: "npm:^6.2.1"
+    tsc-watch: "npm:^7.1.1"
     typescript: "npm:^5.8.3"
     typescript-eslint: "npm:^8.32.1"
   languageName: unknown
@@ -1225,17 +1225,6 @@ __metadata:
     object-assign: "npm:^4"
     vary: "npm:^1"
   checksum: 10c0/373702b7999409922da80de4a61938aabba6929aea5b6fd9096fefb9e8342f626c0ebd7507b0e8b0b311380744cc985f27edebc0a26e0ddb784b54e1085de761
-  languageName: node
-  linkType: hard
-
-"cross-spawn@npm:^7.0.3":
-  version: 7.0.5
-  resolution: "cross-spawn@npm:7.0.5"
-  dependencies:
-    path-key: "npm:^3.1.0"
-    shebang-command: "npm:^2.0.0"
-    which: "npm:^2.0.1"
-  checksum: 10c0/aa82ce7ac0814a27e6f2b738c5a7cf1fa21a3558a1e42df449fc96541ba3ba731e4d3ecffa4435348808a86212f287c6f20a1ee551ef1ff95d01cfec5f434944
   languageName: node
   linkType: hard
 
@@ -3675,7 +3664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string-argv@npm:^0.3.1":
+"string-argv@npm:^0.3.2":
   version: 0.3.2
   resolution: "string-argv@npm:0.3.2"
   checksum: 10c0/75c02a83759ad1722e040b86823909d9a2fc75d15dd71ec4b537c3560746e33b5f5a07f7332d1e3f88319909f82190843aa2f0a0d8c8d591ec08e93d5b8dec82
@@ -3819,19 +3808,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsc-watch@npm:^6.2.1":
-  version: 6.3.0
-  resolution: "tsc-watch@npm:6.3.0"
+"tsc-watch@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "tsc-watch@npm:7.1.1"
   dependencies:
-    cross-spawn: "npm:^7.0.3"
+    cross-spawn: "npm:^7.0.6"
     node-cleanup: "npm:^2.1.2"
     ps-tree: "npm:^1.2.0"
-    string-argv: "npm:^0.3.1"
+    string-argv: "npm:^0.3.2"
   peerDependencies:
     typescript: "*"
   bin:
     tsc-watch: dist/lib/tsc-watch.js
-  checksum: 10c0/7fca4ddcb96dced095391f218a4b9d27b0046213639fc8f8133492b46d2c1b4dc797719bf4b3239cfe54a1e95c6730122467ef35b4055d2ba6cb231950c2fd54
+  checksum: 10c0/e69b530c2664213574aa67bb47544cf8d4e55ea46cd2a8929f44d8b8c8a70c3574b9ebe7b1752348690b276ece895f8db86fcf84c1d88be9868eb0705cce2dad
   languageName: node
   linkType: hard
 
