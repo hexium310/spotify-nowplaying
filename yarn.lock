@@ -456,13 +456,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chrome@npm:^0.0.322":
-  version: 0.0.322
-  resolution: "@types/chrome@npm:0.0.322"
+"@types/chrome@npm:^0.0.325":
+  version: 0.0.325
+  resolution: "@types/chrome@npm:0.0.325"
   dependencies:
     "@types/filesystem": "npm:*"
     "@types/har-format": "npm:*"
-  checksum: 10c0/6568a499963f65d0af4a9c9aed9137924178be21ace2d39c2fcc9123eaee05d55e6cc1d1687cbdd0937445a49fd829896d3c0af74125a0e0b0bc513c5e112bf6
+  checksum: 10c0/f515ce37096ebd48d453faa0adf09ec35bffb7bcc7a8fcb99a1c39cd71c51abed85c8150a6b8d66f423afc3cb9c00e88a833deedaefc97d769b05a4f50d3a125
   languageName: node
   linkType: hard
 
@@ -818,7 +818,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.26.0"
     "@stylistic/eslint-plugin": "npm:^4.2.0"
-    "@types/chrome": "npm:^0.0.322"
+    "@types/chrome": "npm:^0.0.325"
     "@types/node": "npm:^22.15.20"
     camelcase-keys: "npm:^9.1.3"
     chokidar: "npm:^4.0.3"
