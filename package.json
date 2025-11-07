@@ -18,7 +18,7 @@
     "@stylistic/eslint-plugin": "^5.5.0",
     "@types/chrome": "^0.0.326",
     "@types/node": "^24.8.1",
-    "camelcase-keys": "^10.0.0",
+    "camelcase-keys": "^10.0.1",
     "chokidar": "^4.0.3",
     "esbuild": "^0.25.11",
     "eslint": "^9.38.0",
