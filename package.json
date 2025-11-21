@@ -14,14 +14,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
-    "@stylistic/eslint-plugin": "^5.5.0",
+    "@eslint/js": "^9.39.1",
+    "@stylistic/eslint-plugin": "^5.6.1",
     "@types/chrome": "^0.0.326",
     "@types/node": "^24.8.1",
     "camelcase-keys": "^10.0.0",
     "chokidar": "^4.0.3",
     "esbuild": "^0.25.11",
-    "eslint": "^9.38.0",
+    "eslint": "^9.39.1",
     "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
@@ -29,7 +29,7 @@
     "snakecase-keys": "^9.0.2",
     "tsc-watch": "^7.2.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "typescript-eslint": "^8.47.0"
   },
   "packageManager": "yarn@4.5.1"
 }
