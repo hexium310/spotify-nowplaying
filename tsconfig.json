@@ -13,6 +13,7 @@
       "~utils/*": ["./src/utils/*"]
     },
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["node", "chrome"],
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
