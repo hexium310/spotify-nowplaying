@@ -54,13 +54,11 @@ export const escapeForUrl = (base64: string): string => {
 };
 
 export const generateCodeVerifier = (): string => {
-  // @ts-expect-error: Uint8Array.prototype.toBase64 is available in Firefox 133.0 beta or later
   return escapeForUrl(new Uint8Array(32).toBase64());
 };
 
 export const generateCodeChallenge = async (verifier: string): Promise<string> => {
   const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
-  // @ts-expect-error: Uint8Array.prototype.toBase64 is available in Firefox 133.0 beta or later
   return escapeForUrl(new Uint8Array(buffer).toBase64());
 };
 
