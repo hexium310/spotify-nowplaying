@@ -784,7 +784,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.32.0"
     globals: "npm:^17.7.0"
     snakecase-keys: "npm:^9.0.2"
-    tsc-watch: "npm:^7.2.0"
+    tsc-watch: "npm:^7.2.1"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.62.0"
   languageName: unknown
@@ -3652,9 +3652,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsc-watch@npm:^7.2.0":
-  version: 7.2.0
-  resolution: "tsc-watch@npm:7.2.0"
+"tsc-watch@npm:^7.2.1":
+  version: 7.2.1
+  resolution: "tsc-watch@npm:7.2.1"
   dependencies:
     cross-spawn: "npm:^7.0.6"
     node-cleanup: "npm:^2.1.2"
@@ -3664,7 +3664,7 @@ __metadata:
     typescript: "*"
   bin:
     tsc-watch: dist/lib/tsc-watch.js
-  checksum: 10c0/32d849be1579fa57c9503988729ef5dc2886fae6ff7df95eb5fc07ea0a7efce100e0bf32b9a34a8b342fda19a58d810b8723fb49229d53c4ed42cc4bfa0d1e1f
+  checksum: 10c0/cac0c9f9be39ed429f2d7665f772a83d30c47437a0d9bcc01a250125a18b5e0c64a3bc36fb014051388227faa84ffc6c4769cd04356a2fd1304c0ef59e99f377
   languageName: node
   linkType: hard
 
