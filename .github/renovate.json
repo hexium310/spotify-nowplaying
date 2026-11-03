@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "github>hexium310/renovate-config",
+    "github>hexium310/renovate-config:labels",
+    "github>hexium310/renovate-config:javascript"
+  ]
+}
