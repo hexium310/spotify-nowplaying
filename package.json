@@ -19,7 +19,7 @@
     "@types/chrome": "^0.0.326",
     "@types/node": "^26.6.6",
     "camelcase-keys": "^10.0.3",
-    "chokidar": "^5.0.0",
+    "chokidar": "^6.0.0",
     "esbuild": "^0.28.2",
     "eslint": "^10.14.0",
     "eslint-config-flat-gitignore": "^2.4.0",
